@@ -13,12 +13,12 @@ const loadObjectives = async () => {
 // Load progress from localStorage
 const loadProgress = () => {
     const progress = localStorage.getItem('rfcpProgress');
-    return progress ? JSON.parse(progress) : [];
+    return progress ? JSON.parse(progress) : { completedIds: [], completionDates: {} };
 };
 
 // Save progress to localStorage
-const saveProgress = (completedIds) => {
-    localStorage.setItem('rfcpProgress', JSON.stringify(completedIds));
+const saveProgress = (completedIds, completionDates) => {
+    localStorage.setItem('rfcpProgress', JSON.stringify({ completedIds, completionDates }));
 };
 
 // Update progress display
@@ -92,10 +92,69 @@ const filterObjectives = (objectives, filter = 'all', completedIds = [], searchT
     return filtered;
 };
 
+// Generate contribution grid for the last 30 days
+const generateContributionGrid = (completionDates) => {
+    const gridContainer = document.getElementById('contribution-grid');
+    if (!gridContainer) return;
+    
+    gridContainer.innerHTML = '';
+    
+    // Get dates for the last 30 days
+    const today = new Date();
+    const dates = [];
+    
+    for (let i = 29; i >= 0; i--) {
+        const date = new Date(today);
+        date.setDate(today.getDate() - i);
+        date.setHours(0, 0, 0, 0);
+        dates.push(date);
+    }
+    
+    // Count completions per day
+    const completionsPerDay = {};
+    
+    Object.values(completionDates).forEach(dateString => {
+        const date = new Date(dateString);
+        date.setHours(0, 0, 0, 0);
+        const dateKey = date.toISOString().split('T')[0];
+        
+        if (completionsPerDay[dateKey]) {
+            completionsPerDay[dateKey]++;
+        } else {
+            completionsPerDay[dateKey] = 1;
+        }
+    });
+    
+    // Create grid cells
+    dates.forEach(date => {
+        const dateKey = date.toISOString().split('T')[0];
+        const count = completionsPerDay[dateKey] || 0;
+        
+        const cell = document.createElement('div');
+        cell.className = 'contribution-cell';
+        
+        // Add level class based on count
+        if (count >= 10) {
+            cell.classList.add('level-4');
+        } else if (count >= 7) {
+            cell.classList.add('level-3');
+        } else if (count >= 4) {
+            cell.classList.add('level-2');
+        } else if (count >= 1) {
+            cell.classList.add('level-1');
+        }
+        
+        // Add tooltip data
+        cell.title = `${date.toLocaleDateString()}: ${count} ojbjectives learned!`;
+        
+        gridContainer.appendChild(cell);
+    });
+};
+
 // Initialize app
 const initApp = async () => {
     const objectives = await loadObjectives();
-    const completedIds = loadProgress();
+    const { completedIds, completionDates } = loadProgress();
     const objectivesList = document.getElementById('objectives-list');
     const filterButtons = document.querySelectorAll('.filter-btn');
     const searchInput = document.getElementById('search-input');
@@ -104,6 +163,9 @@ const initApp = async () => {
 
     // Update progress display with objectives data
     updateProgress(completedIds, objectives.length, objectives);
+    
+    // Generate contribution grid
+    generateContributionGrid(completionDates);
 
     // Render objectives
     const renderObjectives = (filter, search = '') => {
@@ -143,6 +205,7 @@ const initApp = async () => {
 
         if (index === -1) {
             completedIds.push(objectiveId);
+            completionDates[objectiveId] = new Date().toISOString();
             card.classList.add('completed');
             
             // Trigger confetti effect at the click position
@@ -151,11 +214,13 @@ const initApp = async () => {
             }
         } else {
             completedIds.splice(index, 1);
+            delete completionDates[objectiveId];
             card.classList.remove('completed');
         }
 
-        saveProgress(completedIds);
+        saveProgress(completedIds, completionDates);
         updateProgress(completedIds, objectives.length, objectives);
+        generateContributionGrid(completionDates); // Update the contribution grid
         renderObjectives(currentFilter); // Re-render with current filter
     });
 

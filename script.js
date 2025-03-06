@@ -2,8 +2,11 @@
 const loadObjectives = async () => {
     try {
         const response = await fetch('./rfcp.json');
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
         const data = await response.json();
-        return data.lessons;
+        return data.lessons || [];
     } catch (error) {
         console.error('Error loading objectives:', error);
         return [];
@@ -12,13 +15,13 @@ const loadObjectives = async () => {
 
 // Load progress from localStorage
 const loadProgress = () => {
-    const progress = localStorage.getItem('rfcpProgress');
+    const progress = localStorage.getItem('rfcpProgressv2');
     return progress ? JSON.parse(progress) : { completedIds: [], completionDates: {} };
 };
 
 // Save progress to localStorage
 const saveProgress = (completedIds, completionDates) => {
-    localStorage.setItem('rfcpProgress', JSON.stringify({ completedIds, completionDates }));
+    localStorage.setItem('rfcpProgressv2', JSON.stringify({ completedIds, completionDates }));
 };
 
 // Update progress display

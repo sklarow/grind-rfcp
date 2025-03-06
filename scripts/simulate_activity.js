@@ -19,7 +19,7 @@ const simulateActivity = async () => {
         const objectives = data.lessons;
 
         // Get current progress
-        const progress = localStorage.getItem('rfcpProgress');
+        const progress = localStorage.getItem('rfcpProgressv2');
         const { completedIds = [], completionDates = {} } = progress ? JSON.parse(progress) : {};
 
         // Randomly complete 50-80% of objectives
@@ -34,7 +34,7 @@ const simulateActivity = async () => {
         });
 
         // Save to localStorage
-        localStorage.setItem('rfcpProgress', JSON.stringify({ completedIds, completionDates }));
+        localStorage.setItem('rfcpProgressv2', JSON.stringify({ completedIds, completionDates }));
         console.log(`Simulated ${totalToComplete} completions across the last 30 days`);
         
         // Reload the page to see changes

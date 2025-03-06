@@ -148,7 +148,7 @@ const generateContributionGrid = (completionDates) => {
         }
         
         // Add tooltip data
-        cell.title = `${date.toLocaleDateString()}: ${count} ojbjectives learned!`;
+        cell.title = `${date.toLocaleDateString()}: ${count} objectives learned!`;
         
         gridContainer.appendChild(cell);
     });

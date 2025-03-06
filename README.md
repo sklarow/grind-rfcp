@@ -20,7 +20,8 @@ A web-based study tracker for the Robot Framework® Certified Professional (RFCP
 
 ## How to Use
 
-### You can just access
+You can just access the github page:
+https://sklarow.github.io/grind-rfcp/
 
 
 ### Tracking Progress

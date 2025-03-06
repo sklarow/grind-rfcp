@@ -56,7 +56,10 @@ const createObjectiveCard = (objective, isCompleted) => {
 
     card.innerHTML = `
         <div class="objective-header">
-            <span class="objective-type type-${objective.type}">${objective.type}</span>
+            <div class="type-id-container">
+                <span class="objective-type type-${objective.type}">${objective.type}</span>
+                <span class="objective-id">${objective.id}</span>
+            </div>
             <span class="objective-time">${objective.time_min} min</span>
         </div>
         <h3 class="objective-name">${objective.name}</h3>

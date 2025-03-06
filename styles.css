@@ -190,10 +190,22 @@ header h1 {
     padding-right: 2.5rem;
 }
 
+.type-id-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
 .objective-type {
     padding: 0.25rem 0.5rem;
     border-radius: 4px;
     font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.objective-id {
+    font-size: 0.875rem;
+    color: #666;
     font-weight: 500;
 }
 

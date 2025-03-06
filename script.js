@@ -144,6 +144,11 @@ const initApp = async () => {
         if (index === -1) {
             completedIds.push(objectiveId);
             card.classList.add('completed');
+            
+            // Trigger confetti effect at the click position
+            if (window.confetti) {
+                window.confetti.burst(e.clientX, e.clientY);
+            }
         } else {
             completedIds.splice(index, 1);
             card.classList.remove('completed');

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RFCP Study Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>RFCP Study Tracker</h1>
+        <p>Track your Robot Framework® Certified Professional learning progress</p>
+    </header>
+
+    <main>
+        <div class="preferences">
+            <h2>Study Progress</h2>
+            <div class="progress-bar">
+                <div id="progress" class="progress"></div>
+            </div>
+            <p><span id="completed-count">0</span> / <span id="total-count">0</span> completed</p>
+        </div>
+
+        <div class="objectives-container">
+            <div class="filters">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="K1">K1 (Remember)</button>
+                <button class="filter-btn" data-filter="K2">K2 (Understand)</button>
+                <button class="filter-btn" data-filter="K3">K3 (Apply)</button>
+                <button class="filter-btn" data-filter="completed">Completed</button>
+                <button class="filter-btn" data-filter="unfinished">Unfinished</button>
+            </div>
+
+            <div class="objectives-list" id="objectives-list">
+                <!-- Objectives will be loaded here via JavaScript -->
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>Inspired by Grind75 - Built for RFCP Study</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

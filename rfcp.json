@@ -1,7 +1,7 @@
 {
     "name": "Robot Framework® Certified Professional Learning Objectives",
     "website": "https://robotframework.org/robotframework-RFCP-syllabus/docs/learning_objectives",
-    "Description": "This website contains the learning objectives from the RFCP syllabus, each with an associated knowledge level and estimated study time.",
+    "Description": "This JSON contains the learning objectives from the RFCP syllabus, each with an associated knowledge level and estimated study time. For simplicity we assumed 5 minutes for each K1, 15 minutes for each K2, and 20 minutes for each K3.",
     "lessons": [
       {
         "id": "LO-2.1.2.4",

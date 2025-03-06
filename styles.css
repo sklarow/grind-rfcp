@@ -57,16 +57,64 @@ header h1 {
 }
 
 .filters {
-    margin-bottom: 1.5rem;
+    margin-bottom: 2.5rem;
     display: flex;
     gap: 0.5rem;
-    flex-wrap: wrap;
+    max-width: 600px;
+    margin: 0 auto 2.5rem;
+    justify-content: center;
+}
+
+.filter-btn {
+    padding: 0.5rem 1.2rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 0.875rem;
+    flex: 1;
+    min-width: fit-content;
+    white-space: nowrap;
+}
+
+.search-container {
+    margin-bottom: 1.5rem;
+}
+
+.search-wrapper {
+    position: relative;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.search-input {
+    width: 100%;
+    padding: 12px 45px 12px 20px;
+    border: 1px solid #ddd;
+    border-radius: 24px;
+    font-size: 16px;
+    box-shadow: 0 1px 6px rgba(32, 33, 36, 0.08);
+    transition: all 0.3s;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: #4285F4;
+    box-shadow: 0 1px 8px rgba(66, 133, 244, 0.2);
+}
+
+.search-icon {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #5F6368;
+    font-size: 18px;
 }
 
 .filter-btn {
     padding: 0.5rem 1rem;
     border: 1px solid #ddd;
     border-radius: 4px;
+    font-size: 0.875rem;
     background: white;
     cursor: pointer;
     transition: all 0.2s;

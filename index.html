@@ -22,13 +22,20 @@
         </div>
 
         <div class="objectives-container">
+            <div class="search-container">
+                <div class="search-wrapper">
+                    <input type="text" id="search-input" class="search-input" placeholder="Search objectives...">
+                    <div class="search-icon">🔍</div>
+                </div>
+            </div>
             <div class="filters">
                 <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="completed">Completed</button>
+                <button class="filter-btn" data-filter="unfinished">Unfinished</button>
                 <button class="filter-btn" data-filter="K1">K1 (Remember)</button>
                 <button class="filter-btn" data-filter="K2">K2 (Understand)</button>
                 <button class="filter-btn" data-filter="K3">K3 (Apply)</button>
-                <button class="filter-btn" data-filter="completed">Completed</button>
-                <button class="filter-btn" data-filter="unfinished">Unfinished</button>
+
             </div>
 
             <div class="objectives-list" id="objectives-list">

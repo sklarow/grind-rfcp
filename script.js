@@ -73,11 +73,20 @@ const createObjectiveCard = (objective, isCompleted) => {
 };
 
 // Filter objectives
-const filterObjectives = (objectives, filter = 'all', completedIds = []) => {
-    if (filter === 'all') return objectives;
-    if (filter === 'completed') return objectives.filter(obj => completedIds.includes(obj.id));
-    if (filter === 'unfinished') return objectives.filter(obj => !completedIds.includes(obj.id));
-    return objectives.filter(obj => obj.type === filter);
+const filterObjectives = (objectives, filter = 'all', completedIds = [], searchTerm = '') => {
+    // First filter by category
+    let filtered = objectives;
+    if (filter === 'completed') filtered = objectives.filter(obj => completedIds.includes(obj.id));
+    else if (filter === 'unfinished') filtered = objectives.filter(obj => !completedIds.includes(obj.id));
+    else if (filter !== 'all') filtered = objectives.filter(obj => obj.type === filter);
+    
+    // Then filter by search term if provided
+    if (searchTerm.trim() !== '') {
+        const term = searchTerm.toLowerCase();
+        filtered = filtered.filter(obj => obj.name.toLowerCase().includes(term) || obj.id.toLowerCase().includes(term));
+    }
+    
+    return filtered;
 };
 
 // Initialize app
@@ -86,14 +95,16 @@ const initApp = async () => {
     const completedIds = loadProgress();
     const objectivesList = document.getElementById('objectives-list');
     const filterButtons = document.querySelectorAll('.filter-btn');
+    const searchInput = document.getElementById('search-input');
     let currentFilter = 'all';
+    let currentSearch = '';
 
     // Update progress display with objectives data
     updateProgress(completedIds, objectives.length, objectives);
 
     // Render objectives
-    const renderObjectives = (filter) => {
-        const filteredObjectives = filterObjectives(objectives, filter, completedIds);
+    const renderObjectives = (filter, search = '') => {
+        const filteredObjectives = filterObjectives(objectives, filter, completedIds, search);
         objectivesList.innerHTML = '';
         
         filteredObjectives.forEach(objective => {
@@ -109,8 +120,14 @@ const initApp = async () => {
             filterButtons.forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
             currentFilter = btn.dataset.filter;
-            renderObjectives(currentFilter);
+            renderObjectives(currentFilter, currentSearch);
         });
+    });
+
+    // Handle search input
+    searchInput.addEventListener('input', (e) => {
+        currentSearch = e.target.value;
+        renderObjectives(currentFilter, currentSearch);
     });
 
     // Handle objective clicks
